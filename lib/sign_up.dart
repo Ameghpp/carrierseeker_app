@@ -1,16 +1,13 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpState extends State<SignUp> {
   bool _obscureText = true;
 
   @override
@@ -23,12 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
             child: ListView(
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
                 Image.asset('assets/login_image.png'),
                 Center(
                   child: Text(
-                    'Login',
+                    'Sign Up',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -36,11 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
                 TextField(
                   decoration: InputDecoration(
-                      labelText: 'email',
+                      labelText: 'Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       contentPadding: EdgeInsets.all(25),
@@ -48,7 +45,42 @@ class _LoginScreenState extends State<LoginScreen> {
                       fillColor: Colors.white),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 15,
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      contentPadding: EdgeInsets.all(25),
+                      filled: true,
+                      fillColor: Colors.white),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: EdgeInsets.all(25),
+                    hintText: 'password',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _obscureText = !_obscureText;
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
                 ),
                 TextField(
                   obscureText: _obscureText,
@@ -58,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     contentPadding: EdgeInsets.all(25),
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'password',
+                    hintText: 'confirm password',
                     suffixIcon: IconButton(
                       onPressed: () {
                         _obscureText = !_obscureText;
@@ -75,14 +107,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(
                   width: 200,
-                  child: TextButton(
-                      style: TextButton.styleFrom(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
                         backgroundColor: Color.fromARGB(255, 75, 148, 243),
                         foregroundColor: const Color.fromARGB(255, 13, 13, 14),
                       ),
                       onPressed: () {},
                       child: Text(
-                        'LOGIN',
+                        'Sign up',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -91,8 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(
                   height: 50,
-                ),
-                Center(child: Text('craete an account'))
+                )
               ],
             ),
           ),
