@@ -16,17 +16,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 139, 196, 247),
+        backgroundColor: const Color.fromARGB(255, 139, 196, 247),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Image.asset('assets/login_image.png'),
-                Center(
+                const Center(
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 TextField(
@@ -43,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       labelText: 'email',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      contentPadding: EdgeInsets.all(25),
+                      contentPadding: const EdgeInsets.all(25),
                       filled: true,
                       fillColor: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 TextField(
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    contentPadding: EdgeInsets.all(25),
+                    contentPadding: const EdgeInsets.all(25),
                     filled: true,
                     fillColor: Colors.white,
                     hintText: 'password',
@@ -70,18 +70,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 SizedBox(
                   width: 200,
                   child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 75, 148, 243),
+                        backgroundColor:
+                            const Color.fromARGB(255, 75, 148, 243),
                         foregroundColor: const Color.fromARGB(255, 13, 13, 14),
                       ),
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         'LOGIN',
                         style: TextStyle(
                           fontSize: 20,
@@ -89,10 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
-                Center(child: Text('craete an account'))
+                const Center(child: Text('craete an account'))
               ],
             ),
           ),

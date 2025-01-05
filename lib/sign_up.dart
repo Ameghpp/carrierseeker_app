@@ -13,17 +13,17 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 139, 196, 247),
+        backgroundColor: const Color.fromARGB(255, 139, 196, 247),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Image.asset('assets/login_image.png'),
-                Center(
+                const Center(
                   child: Text(
                     'Sign Up',
                     style: TextStyle(
@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextField(
@@ -40,11 +40,11 @@ class _SignUpState extends State<SignUp> {
                       labelText: 'Name',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      contentPadding: EdgeInsets.all(25),
+                      contentPadding: const EdgeInsets.all(25),
                       filled: true,
                       fillColor: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextField(
@@ -52,11 +52,11 @@ class _SignUpState extends State<SignUp> {
                       labelText: 'Email',
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      contentPadding: EdgeInsets.all(25),
+                      contentPadding: const EdgeInsets.all(25),
                       filled: true,
                       fillColor: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextField(
@@ -66,7 +66,7 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(20)),
                     filled: true,
                     fillColor: Colors.white,
-                    contentPadding: EdgeInsets.all(25),
+                    contentPadding: const EdgeInsets.all(25),
                     hintText: 'password',
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -79,7 +79,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextField(
@@ -87,7 +87,7 @@ class _SignUpState extends State<SignUp> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    contentPadding: EdgeInsets.all(25),
+                    contentPadding: const EdgeInsets.all(25),
                     filled: true,
                     fillColor: Colors.white,
                     hintText: 'confirm password',
@@ -102,7 +102,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 SizedBox(
@@ -111,11 +111,12 @@ class _SignUpState extends State<SignUp> {
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
-                        backgroundColor: Color.fromARGB(255, 75, 148, 243),
+                        backgroundColor:
+                            const Color.fromARGB(255, 75, 148, 243),
                         foregroundColor: const Color.fromARGB(255, 13, 13, 14),
                       ),
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         'Sign up',
                         style: TextStyle(
                           fontSize: 20,
@@ -123,7 +124,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 )
               ],
