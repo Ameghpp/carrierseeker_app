@@ -66,8 +66,8 @@ class _CustomButtonState extends State<CustomButton> {
           padding: EdgeInsets.only(
             left: widget.label != null ? 15 : 10,
             right: widget.iconData != null ? 10 : 15,
-            top: widget.iconData != null ? 7 : 7,
-            bottom: widget.iconData != null ? 7 : 7,
+            top: widget.iconData != null ? 7 : 10,
+            bottom: widget.iconData != null ? 7 : 10,
           ),
           child: Row(
             mainAxisAlignment: widget.label != null && widget.iconData != null

@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'home/boolmark_screen.dart';
+import 'login/login_screen.dart';
+import 'profile/profile_screen.dart';
+import 'university/universities.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,37 +17,6 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   late TabController _tabController;
-  List data = [
-    {
-      'image':
-          "https://th.bing.com/th/id/OIP.1RKEZDnbMdqoJrxLOlnoFwHaD4?rs=1&pid=ImgDetMain",
-      'title': 'CALICUT UNIVERSITY ',
-      'locationText': 'CALICUT,KERALA ',
-    },
-    {
-      'image':
-          "https://images.news18.com/ibnlive/uploads/2022/10/kannuruniversity-166659267916x9.jpg",
-      'title': 'KANNUR UNIVERSITY ',
-      'locationText': 'KANNUR,KERALA ',
-    },
-    {
-      'image': "https://cusat.ac.in/images/dept/stats_jan17.jpg",
-      'title': 'Cochin University of Science and Technology',
-      'locationText': 'KOCHI,KERALA ',
-    },
-    {
-      'image':
-          "https://www.livelaw.in/cms/wp-content/uploads/2017/12/Kerala-HC.jpg",
-      'title': 'M G UNIVERSITY ',
-      'locationText': 'KOTTAYAM,KERALA ',
-    },
-    {
-      'image':
-          "https://i.pinimg.com/736x/ef/d3/4e/efd34e019032156c07c3afe84672f0ce.jpg",
-      'title': 'KTU UNIVERSITY ',
-      'locationText': 'THIRUVANANTHAPURAM,KERALA ',
-    },
-  ];
 
   @override
   void initState() {
@@ -53,6 +28,19 @@ class _HomePageState extends State<HomePage>
       setState(() {});
     });
     super.initState();
+    Future.delayed(
+        const Duration(
+          milliseconds: 100,
+        ), () {
+      User? currentUser = Supabase.instance.client.auth.currentUser;
+      if (currentUser == null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -81,112 +69,10 @@ class _HomePageState extends State<HomePage>
           TabBarView(
             controller: _tabController,
             children: [
-              ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                itemBuilder: (context, index) => CustomCard(
-                  image: data[index]['image'],
-                  title: data[index]['title'],
-                  locationText: data[index]['locationText'],
-                ),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 30,
-                ),
-                itemCount: data.length,
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'SEARCH',
-                        prefixIcon: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.search_outlined),
-                        ),
-                        suffixIcon: _searchController.text.isEmpty
-                            ? SizedBox()
-                            : IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.close),
-                              ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        contentPadding: const EdgeInsets.all(20),
-                      ),
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: CustomCard(
-                      image:
-                          "https://images.news18.com/ibnlive/uploads/2022/10/kannuruniversity-166659267916x9.jpg",
-                      title: "KANNUR UNIVERSITY",
-                      locationText: "KANNUR,KERALA",
-                      bookmarked: true,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    "PROFILE",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  ClipOval(
-                    child: Image.network(
-                      "https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg",
-                      alignment: Alignment.center,
-                      width: 200,
-                      height: 200,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 18),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          labelText: 'USERNAME',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          contentPadding: const EdgeInsets.all(15),
-                          filled: true,
-                          fillColor: Colors.white),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, bottom: 18),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          labelText: 'EMAIL',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          contentPadding: const EdgeInsets.all(15),
-                          filled: true,
-                          fillColor: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-              TextField()
+              Universities(),
+              SearchScreen(searchController: _searchController),
+              BookMarkScreen(),
+              ProfileScreen(),
             ],
           ),
           Padding(
@@ -235,6 +121,52 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
+    );
+  }
+}
+
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({
+    super.key,
+    required TextEditingController searchController,
+  }) : _searchController = searchController;
+
+  final TextEditingController _searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'SEARCH',
+              prefixIcon: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.search_outlined),
+              ),
+              suffixIcon: _searchController.text.isEmpty
+                  ? SizedBox()
+                  : IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.close),
+                    ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+              contentPadding: const EdgeInsets.all(20),
+            ),
+            textAlign: TextAlign.left,
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
+        ),
+      ],
     );
   }
 }
