@@ -26,24 +26,12 @@ class CustomChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                name,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Icon(
-                Icons.close_rounded,
-                color: Colors.red,
-              ),
-            ],
+          child: Text(
+            name,
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
           ),
         ),
       ),

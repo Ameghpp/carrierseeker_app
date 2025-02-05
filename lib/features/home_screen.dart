@@ -1,9 +1,11 @@
+import 'package:carrier_seeker_app/features/college/college.dart';
+import 'package:carrier_seeker_app/features/course/courses.dart';
+import 'package:carrier_seeker_app/features/profile/profile_screen.dart';
+import 'package:carrier_seeker_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'home/boolmark_screen.dart';
 import 'login/login_screen.dart';
-import 'profile/profile_screen.dart';
 import 'university/universities.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,18 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _searchController = TextEditingController();
   late TabController _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       setState(() {});
     });
-    _searchController.addListener(() {
-      setState(() {});
-    });
+
     super.initState();
     Future.delayed(
         const Duration(
@@ -67,11 +66,13 @@ class _HomePageState extends State<HomePage>
         alignment: Alignment.bottomCenter,
         children: [
           TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: [
               Universities(),
-              SearchScreen(searchController: _searchController),
-              BookMarkScreen(),
+              Universities(),
+              Collages(),
+              Courses(),
               ProfileScreen(),
             ],
           ),
@@ -80,7 +81,7 @@ class _HomePageState extends State<HomePage>
             child: Material(
               elevation: 10,
               borderRadius: BorderRadius.circular(50),
-              color: Color.fromARGB(255, 42, 146, 230),
+              color: primaryColor,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -95,24 +96,31 @@ class _HomePageState extends State<HomePage>
                     ),
                     CustomNavBarItem(
                       isActive: _tabController.index == 1,
-                      iconData: Icons.search_outlined,
+                      iconData: Icons.school,
                       onTap: () {
                         _tabController.animateTo(1);
                       },
                     ),
                     CustomNavBarItem(
                       isActive: _tabController.index == 2,
-                      iconData: Icons.bookmark_border_outlined,
+                      iconData: Icons.location_city,
                       onTap: () {
                         _tabController.animateTo(2);
                       },
                     ),
                     CustomNavBarItem(
                       isActive: _tabController.index == 3,
-                      iconData: Icons.person_2_outlined,
+                      iconData: Icons.psychology,
                       onTap: () {
                         _tabController.animateTo(3);
                       },
+                    ),
+                    CustomNavBarItem(
+                      isActive: _tabController.index == 4,
+                      onTap: () {
+                        _tabController.animateTo(4);
+                      },
+                      iconData: Icons.person_2_outlined,
                     ),
                   ],
                 ),
@@ -128,42 +136,38 @@ class _HomePageState extends State<HomePage>
 class SearchScreen extends StatelessWidget {
   const SearchScreen({
     super.key,
-    required TextEditingController searchController,
-  }) : _searchController = searchController;
-
-  final TextEditingController _searchController;
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            controller: _searchController,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
               hintText: 'SEARCH',
               prefixIcon: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.search_outlined),
+                icon: const Icon(Icons.search_outlined),
               ),
-              suffixIcon: _searchController.text.isEmpty
-                  ? SizedBox()
-                  : IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.close),
-                    ),
+              // suffixIcon: _searchController.text.isEmpty
+              //     ? const SizedBox()
+              //     : IconButton(
+              //         onPressed: () {},
+              //         icon: const Icon(Icons.close),
+              //       ),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
               contentPadding: const EdgeInsets.all(20),
             ),
             textAlign: TextAlign.left,
-            style: TextStyle(fontWeight: FontWeight.w500),
+            style: const TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
       ],
@@ -184,115 +188,26 @@ class CustomNavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
+    return Expanded(
+      child: GestureDetector(
         onTap: onTap,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              iconData,
-              color: Colors.white,
-              size: 50,
-            ),
-            if (isActive)
-              CircleAvatar(
-                radius: 2,
-                backgroundColor: Colors.white,
-              )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  final String image, title, locationText;
-  final bool bookmarked;
-  const CustomCard({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.locationText,
-    this.bookmarked = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(30),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(30),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                  height: 170,
-                  width: double.infinity,
-                ),
+        child: Material(
+          color: Colors.transparent,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                iconData,
+                color: Colors.white,
+                size: 30,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.location_on_outlined),
-                            Text(
-                              locationText,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      bookmarked
-                          ? Icons.bookmark
-                          : Icons.bookmark_border_outlined,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              if (isActive)
+                CircleAvatar(
+                  radius: 2,
+                  backgroundColor: Colors.white,
+                )
+            ],
+          ),
         ),
       ),
     );
