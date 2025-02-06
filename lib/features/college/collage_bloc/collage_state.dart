@@ -26,3 +26,9 @@ final class CollagesFailureState extends CollagesState {
 
   CollagesFailureState({this.message = apiErrorMessage});
 }
+
+final class RecommendedCollagesGetSuccessState extends CollagesState {
+  final List<Map<String, dynamic>> collages;
+
+  RecommendedCollagesGetSuccessState({required this.collages});
+}

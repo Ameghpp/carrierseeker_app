@@ -1,6 +1,7 @@
 import 'package:carrier_seeker_app/features/college/college.dart';
 import 'package:carrier_seeker_app/features/course/courses.dart';
 import 'package:carrier_seeker_app/features/profile/profile_screen.dart';
+import 'package:carrier_seeker_app/features/recommended/recommended_universities.dart';
 import 'package:carrier_seeker_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -48,9 +49,9 @@ class _HomePageState extends State<HomePage>
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.grey[100],
-        title: const Text(
-          'COURSA!',
-          style: TextStyle(
+        title: Text(
+          _tabController.index == 4 ? 'PROFILE' : 'COURSA!',
+          style: const TextStyle(
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.bold,
               color: Colors.blue),
@@ -68,8 +69,8 @@ class _HomePageState extends State<HomePage>
           TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
-            children: [
-              Universities(),
+            children: const [
+              RecommendedUniversitie(),
               Universities(),
               Collages(),
               Courses(),

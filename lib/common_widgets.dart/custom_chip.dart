@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 class CustomChip extends StatelessWidget {
-  final Function() onTap;
+  final Function()? onTap;
   final String name;
   const CustomChip({
     super.key,
-    required this.onTap,
+    this.onTap,
     required this.name,
   });
 

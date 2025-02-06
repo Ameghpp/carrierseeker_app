@@ -15,6 +15,12 @@ final class UniversitiesGetSuccessState extends UniversitiesState {
   UniversitiesGetSuccessState({required this.universities});
 }
 
+final class RecommendedUniversitiesGetSuccessState extends UniversitiesState {
+  final List<Map<String, dynamic>> universities;
+
+  RecommendedUniversitiesGetSuccessState({required this.universities});
+}
+
 final class UniversitiesGetByIdSuccessState extends UniversitiesState {
   final Map<String, dynamic> universities;
 
