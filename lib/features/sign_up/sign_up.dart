@@ -1,7 +1,7 @@
 import 'package:carrier_seeker_app/common_widgets.dart/custom_button.dart';
 import 'package:carrier_seeker_app/common_widgets.dart/custom_text_formfield.dart';
 import 'package:carrier_seeker_app/features/interest/add_intersts.dart';
-import 'package:carrier_seeker_app/features/login/login_screen.dart';
+import 'package:carrier_seeker_app/features/login/signin_screen.dart';
 import 'package:carrier_seeker_app/features/sign_up/sign_up_bloc/sign_up_bloc.dart';
 import 'package:carrier_seeker_app/util/value_validator.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +236,7 @@ class _SignUpState extends State<SignUp> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const LoginScreen()));
+                                          const SigninScreen()));
                             },
                             child: const Text('Sign Up'),
                           ),

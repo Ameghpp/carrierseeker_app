@@ -1,4 +1,4 @@
-import 'package:carrier_seeker_app/features/login/login_screen.dart';
+import 'package:carrier_seeker_app/features/login/signin_screen.dart';
 import 'package:carrier_seeker_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: appTheme,
-      home: const LoginScreen(),
+      home: const SigninScreen(),
     );
   }
 }

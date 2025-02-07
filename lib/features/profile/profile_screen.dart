@@ -10,7 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common_widgets.dart/custom_alert_dialog.dart';
-import '../login/login_screen.dart';
+import '../login/signin_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -240,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
+                              builder: (context) => const SigninScreen(),
                             ),
                             (route) => false);
                       },

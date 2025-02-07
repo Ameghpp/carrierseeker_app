@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../features/login/login_screen.dart';
+import '../features/login/signin_screen.dart';
 
 void checkLogin(BuildContext context) {
   Future.delayed(
@@ -12,7 +12,7 @@ void checkLogin(BuildContext context) {
     if (!(currentUser != null)) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => const SigninScreen(),
         ),
       );
     }

@@ -8,16 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common_widgets.dart/custom_alert_dialog.dart';
-import 'login_bloc/login_bloc.dart';
+import 'signin_bloc/signin_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SigninScreen extends StatefulWidget {
+  const SigninScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SigninScreen> createState() => _SigninScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SigninScreenState extends State<SigninScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -47,16 +47,16 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 139, 196, 247),
         body: BlocProvider(
-          create: (context) => LoginBloc(),
-          child: BlocConsumer<LoginBloc, LoginState>(
+          create: (context) => SigninBloc(),
+          child: BlocConsumer<SigninBloc, SigninState>(
             listener: (context, state) {
-              if (state is LoginSuccessState) {
+              if (state is SigninSuccessState) {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const HomePage()),
                   (route) => false,
                 );
-              } else if (state is LoginFailureState) {
+              } else if (state is SigninFailureState) {
                 showDialog(
                   context: context,
                   builder: (context) => CustomAlertDialog(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Image.asset('assets/login_image.png'),
                       const Center(
                         child: Text(
-                          'Login',
+                          'Signin',
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -125,13 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 30,
                       ),
                       CustomButton(
-                        isLoading: state is LoginLoadingState,
+                        isLoading: state is SigninLoadingState,
                         inverse: true,
                         label: 'Sign In',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            BlocProvider.of<LoginBloc>(context).add(
-                              LoginEvent(
+                            BlocProvider.of<SigninBloc>(context).add(
+                              SigninEvent(
                                 email: _emailController.text.trim(),
                                 password: _passwordController.text.trim(),
                               ),

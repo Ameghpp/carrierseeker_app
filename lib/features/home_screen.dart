@@ -6,7 +6,7 @@ import 'package:carrier_seeker_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'login/login_screen.dart';
+import 'login/signin_screen.dart';
 import 'university/universities.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage>
       if (currentUser == null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
+            builder: (context) => const SigninScreen(),
           ),
         );
       }
