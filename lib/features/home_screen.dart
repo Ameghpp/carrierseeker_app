@@ -56,12 +56,6 @@ class _HomePageState extends State<HomePage>
               fontWeight: FontWeight.bold,
               color: Colors.blue),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_outlined),
-          ),
-        ],
       ),
       body: Stack(
         alignment: Alignment.bottomCenter,

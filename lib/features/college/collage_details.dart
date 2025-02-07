@@ -127,10 +127,8 @@ class _CollageDetailsScreenState extends State<CollageDetailsScreen> {
                           children: List.generate(
                             _course.length,
                             (index) => CustomCourseCard(
-                              name: formatValue(_course[index]?['courses']
-                                  ?['courses']?['course_name']),
-                              image: formatValue(_course[index]?['courses']
-                                  ?['courses']?['photo_url']),
+                              name: formatValue(_course[index]?['course_name']),
+                              image: formatValue(_course[index]?['photo_url']),
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -138,7 +136,7 @@ class _CollageDetailsScreenState extends State<CollageDetailsScreen> {
                                     builder: (context) => CourseDetailsScreen(
                                       feeRange: _course[index],
                                       syllabus: _course[index]?['syllabus'],
-                                      courseDetails: _course[index]?['courses'],
+                                      courseDetails: _course[index],
                                     ),
                                   ),
                                 );

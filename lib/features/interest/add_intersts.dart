@@ -61,7 +61,10 @@ class _AddInterestsState extends State<AddInterests> {
             Logger().w(_interests);
             setState(() {});
           } else if (state is InterestsSuccessState) {
-            getInterests();
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false);
           }
         },
         builder: (context, state) {
@@ -120,10 +123,6 @@ class _AddInterestsState extends State<AddInterests> {
                 onPressed: () {
                   _interestsBloc.add(
                       AddInterestsEvent(interestDetails: _selectedInterestIds));
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      (route) => false);
                 },
                 label: 'Save',
               ),

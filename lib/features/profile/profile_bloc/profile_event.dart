@@ -20,3 +20,5 @@ class DeleteProfileEvent extends ProfileEvent {
 
   DeleteProfileEvent({required this.profileId});
 }
+
+class GetStreamsEvent extends ProfileEvent {}

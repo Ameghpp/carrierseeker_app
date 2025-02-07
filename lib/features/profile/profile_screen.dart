@@ -1,6 +1,7 @@
 import 'package:carrier_seeker_app/common_widgets.dart/custom_button.dart';
 import 'package:carrier_seeker_app/common_widgets.dart/custom_chip.dart';
 import 'package:carrier_seeker_app/features/interest/interest.dart';
+import 'package:carrier_seeker_app/features/profile/edit_profile.dart';
 import 'package:carrier_seeker_app/features/profile/profile_bloc/profile_bloc.dart';
 import 'package:carrier_seeker_app/util/check_login.dart';
 import 'package:carrier_seeker_app/util/format_function.dart';
@@ -227,6 +228,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               CustomButton(
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfile(
+                        profileDetails: _profile,
+                      ),
+                    ),
+                  ).then((value) => getProfile());
+                },
+                label: 'Edit Profile',
+                iconData: Icons.edit,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomButton(
+                onPressed: () {
                   showDialog(
                     context: context,
                     builder: (context) => CustomAlertDialog(
@@ -249,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 label: 'Log Out',
                 iconData: Icons.logout,
-              )
+              ),
             ],
           );
         },

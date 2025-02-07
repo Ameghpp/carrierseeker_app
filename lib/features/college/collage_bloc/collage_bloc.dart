@@ -31,16 +31,10 @@ class CollagesBloc extends Bloc<CollagesEvent, CollagesState> {
 
           emit(CollagesGetSuccessState(collages: collages));
         } else if (event is GetCollagesByIdEvent) {
-          Map<String, dynamic> collageData = await table
-              .select(
-                  '''*,courses:collage_course(*,courses:university_courses(*,courses:courses(*)))''')
-              .eq('id', event.collageId)
-              .single();
-
-          collageData['university_courses'] = await Supabase.instance.client
-              .from('university_courses')
-              .select('*,courses:courses(*)')
-              .eq('university_id', collageData['university_id']);
+          Map<String, dynamic> collageData =
+              await supabaseClient.rpc('get_courses_by_college_id', params: {
+            'p_college_id': event.collageId,
+          });
 
           emit(CollagesGetByIdSuccessState(collage: collageData));
         } else if (event is GetRecommendedCollagesEvent) {

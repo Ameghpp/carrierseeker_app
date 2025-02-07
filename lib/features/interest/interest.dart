@@ -66,7 +66,7 @@ class _InterestsState extends State<Interests> {
             Logger().w(_interests);
             setState(() {});
           } else if (state is InterestsSuccessState) {
-            getInterests();
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {
@@ -126,7 +126,6 @@ class _InterestsState extends State<Interests> {
                 onPressed: () {
                   _interestsBloc.add(EditInterestsEvent(
                       interestDetails: _selectedInterestIds));
-                  Navigator.pop(context);
                 },
                 label: 'Save',
               ),

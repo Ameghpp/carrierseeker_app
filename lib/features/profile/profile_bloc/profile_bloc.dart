@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../util/file_upload.dart';
 import '../../../values/strings.dart';
 
 part 'profile_event.dart';
@@ -19,7 +20,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if (event is GetAllProfileEvent) {
           PostgrestFilterBuilder<List<Map<String, dynamic>>> query = table
               .select(
-                  '*,streams:streams(name),interests:user_interests(interests:interests(name))')
+                  '*,streams:streams(*),interests:user_interests(interests:interests(name))')
               .eq('user_id', supabaseClient.auth.currentUser!.id);
 
           Map<String, dynamic> profile = await query.single();
@@ -32,9 +33,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         //   emit(ProfileSuccessState());
         // }
         else if (event is EditProfileEvent) {
+          if (event.profile['photo_file'] != null) {
+            event.profile['photo'] = await uploadFile(
+              'user/photo',
+              event.profile['photo_file'],
+              event.profile['photo_name'],
+            );
+            event.profile.remove('photo_file');
+            event.profile.remove('photo_name');
+          }
+
           await table.update(event.profile).eq('id', event.profileId);
 
           emit(ProfileSuccessState());
+        } else if (event is GetStreamsEvent) {
+          List streams =
+              await supabaseClient.from('streams').select().order('name');
+          emit(GetStreamSuccessState(streams: streams));
         } else if (event is DeleteProfileEvent) {
           await table.delete().eq('id', event.profileId);
           emit(ProfileSuccessState());

@@ -15,6 +15,12 @@ final class ProfileGetSuccessState extends ProfileState {
   ProfileGetSuccessState({required this.profile});
 }
 
+final class GetStreamSuccessState extends ProfileState {
+  final List streams;
+
+  GetStreamSuccessState({required this.streams});
+}
+
 final class ProfileFailureState extends ProfileState {
   final String message;
 
