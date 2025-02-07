@@ -13,33 +13,31 @@ class InterestsBloc extends Bloc<InterestsEvent, InterestsState> {
     on<InterestsEvent>((event, emit) async {
       try {
         emit(InterestsLoadingState());
-        SupabaseQueryBuilder table = Supabase.instance.client.from('interests');
+        SupabaseClient supabaseClient = Supabase.instance.client;
+        SupabaseQueryBuilder table = supabaseClient.from('user_interests');
 
-        if (event is GetAllInterestsEvent) {
-          PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
-              table.select('*');
+        if (event is GetAllUserInterestsEvent) {
+          List<Map<String, dynamic>> interests = await supabaseClient.rpc(
+              'get_user_interests',
+              params: {'p_user_id': supabaseClient.auth.currentUser!.id});
 
-          if (event.params['query'] != null) {
-            query = query.ilike('name', '%${event.params['query']}%');
-          }
-          if (event.params['limit'] != null) {
-            await query.limit(event.params['limit']);
-          }
-
+          emit(InterestsGetSuccessState(interests: interests));
+        } else if (event is GetAllInterestsEvent) {
           List<Map<String, dynamic>> interests =
-              await query.order('name', ascending: true);
+              await supabaseClient.from('interests').select('*').order('name');
 
           emit(InterestsGetSuccessState(interests: interests));
         } else if (event is AddInterestsEvent) {
           await table.insert(event.interestDetails);
 
           emit(InterestsSuccessState());
-          // } else if (event is EditInterestsEvent) {
-          //   await table.update(event.interestDetails).eq('id', event.interestId);
+        } else if (event is EditInterestsEvent) {
+          await table
+              .delete()
+              .eq('user_id', supabaseClient.auth.currentUser!.id);
 
-          //   emit(InterestsSuccessState());
-        } else if (event is DeleteInterestsEvent) {
-          await table.delete().eq('id', event.interestId);
+          await table.insert(event.interestDetails);
+
           emit(InterestsSuccessState());
         }
       } catch (e, s) {

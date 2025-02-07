@@ -9,21 +9,25 @@ class GetAllInterestsEvent extends InterestsEvent {
   GetAllInterestsEvent({required this.params});
 }
 
+class GetAllUserInterestsEvent extends InterestsEvent {
+  final Map<String, dynamic> params;
+
+  GetAllUserInterestsEvent({required this.params});
+}
+
 class AddInterestsEvent extends InterestsEvent {
-  final Map<String, dynamic> interestDetails;
+  final List<Map<String, dynamic>> interestDetails;
 
   AddInterestsEvent({required this.interestDetails});
 }
 
-// class EditInterestsEvent extends InterestsEvent {
-//   final Map<String, dynamic> interestDetails;
-//   final int interestId;
+class EditInterestsEvent extends InterestsEvent {
+  final List<Map<String, dynamic>> interestDetails;
 
-//   EditInterestsEvent({
-//     required this.interestDetails,
-//     required this.interestId,
-//   });
-// }
+  EditInterestsEvent({
+    required this.interestDetails,
+  });
+}
 
 class DeleteInterestsEvent extends InterestsEvent {
   final int interestId;

@@ -20,3 +20,9 @@ class GetUniversitiesByIdEvent extends UniversitiesEvent {
 
   GetUniversitiesByIdEvent({required this.universitieId});
 }
+
+class GetUniversitiesByCourseIdEvent extends UniversitiesEvent {
+  final int courseId;
+
+  GetUniversitiesByCourseIdEvent({required this.courseId});
+}

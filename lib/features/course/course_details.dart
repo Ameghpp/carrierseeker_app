@@ -1,3 +1,4 @@
+import 'package:carrier_seeker_app/features/university/get_universites_by_course.dart';
 import 'package:flutter/material.dart';
 import '../../util/format_function.dart';
 
@@ -14,10 +15,23 @@ class CourseDetailsScreen extends StatefulWidget {
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Map _courseData = {};
+  String? photoUrl, courseName, courseDescription;
+  int? courseId;
 
   @override
   void initState() {
     _courseData = widget.courseDetails;
+    if (_courseData.containsKey('photo_url')) {
+      photoUrl = _courseData['photo_url'];
+      courseName = _courseData['course_name'];
+      courseDescription = _courseData['course_description'];
+      courseId = _courseData['id'];
+    } else if (_courseData['courses']?['photo_url'] != null) {
+      photoUrl = _courseData['courses']?['photo_url'];
+      courseName = _courseData['courses']?['course_name'];
+      courseDescription = _courseData['courses']?['course_description'];
+    }
+
     super.initState();
   }
 
@@ -35,15 +49,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (_courseData['photo_url'] != null)
+                  if (photoUrl != null)
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(8),
                         topRight: Radius.circular(8),
                       ),
                       child: Image.network(
-                        _courseData['photo_url'],
-                        height: 400,
+                        photoUrl!,
+                        height: 250,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -57,7 +71,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          formatValue(_courseData['course_name']),
+                          formatValue(courseName),
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.black,
@@ -75,7 +89,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                           ),
                         const SizedBox(height: 4),
                         Text(
-                          formatValue(_courseData['course_description']),
+                          formatValue(courseDescription),
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     fontWeight: FontWeight.w600,
@@ -114,6 +128,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 ],
               ),
             ),
+            if (courseId != null) GetUniversitesByCourse(courseID: courseId!)
           ],
         ),
       ),

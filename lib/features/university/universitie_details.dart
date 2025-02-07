@@ -195,7 +195,6 @@ class _UniversitieDetailsScreenState extends State<UniversitieDetailsScreen> {
                                       (index) => CustomChip(
                                         name: formatValue(_course[index]
                                             ?['courses']?['course_name']),
-                                        onTap: () {},
                                       ),
                                     ),
                                   ),

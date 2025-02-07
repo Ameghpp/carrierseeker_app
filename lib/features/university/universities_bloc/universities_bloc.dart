@@ -37,11 +37,25 @@ class UniversitiesBloc extends Bloc<UniversitiesEvent, UniversitiesState> {
               .single();
           emit(UniversitiesGetByIdSuccessState(universities: universitieData));
         } else if (event is GetRecommendedUniversitiesEvent) {
-          List<Map<String, dynamic>> universities = await supabaseClient.rpc(
-              'get_universities',
-              params: {'p_user_id': supabaseClient.auth.currentUser!.id});
+          List<Map<String, dynamic>> universities = [];
+          if (event.params['query'] != null) {
+            universities =
+                await supabaseClient.rpc('get_universities', params: {
+              'p_user_id': supabaseClient.auth.currentUser!.id,
+              'search_term': event.params['query']
+            });
+          } else {
+            universities = await supabaseClient.rpc('get_universities',
+                params: {'p_user_id': supabaseClient.auth.currentUser!.id});
+          }
+
           emit(RecommendedUniversitiesGetSuccessState(
               universities: universities));
+        } else if (event is GetUniversitiesByCourseIdEvent) {
+          List<Map<String, dynamic>> universities = await supabaseClient.rpc(
+              'get_universities_by_course_id',
+              params: {'p_course_id': event.courseId});
+          emit(UniversitiesGetSuccessState(universities: universities));
         }
       } catch (e, s) {
         Logger().e('$e\n$s');

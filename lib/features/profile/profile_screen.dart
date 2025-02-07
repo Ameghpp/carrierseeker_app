@@ -191,7 +191,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Interests()));
+                                      builder: (context) =>
+                                          const Interests())).then((data) =>
+                                  Future.delayed(
+                                      const Duration(milliseconds: 500), () {
+                                    getProfile();
+                                  }));
                             },
                             icon: const Icon(Icons.edit),
                           ),

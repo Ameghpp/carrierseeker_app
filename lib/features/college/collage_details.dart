@@ -1,9 +1,10 @@
-import 'package:carrier_seeker_app/common_widgets.dart/custom_chip.dart';
+import 'package:carrier_seeker_app/features/course/custom_course_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import '../../common_widgets.dart/custom_alert_dialog.dart';
 import '../../util/format_function.dart';
+import '../course/course_details.dart';
 import 'collage_bloc/collage_bloc.dart';
 
 class CollageDetailsScreen extends StatefulWidget {
@@ -64,97 +65,94 @@ class _CollageDetailsScreenState extends State<CollageDetailsScreen> {
             }
           },
           builder: (context, state) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxWidth: 900,
-                ),
-                child: ListView(
-                  children: [
-                    if (state is CollagesLoadingState)
-                      const LinearProgressIndicator(),
-                    if (_collageData['cover_page'] != null)
-                      Image.network(
-                        _collageData['cover_page'],
-                        height: 250,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+            return ListView(
+              shrinkWrap: true,
+              children: [
+                if (state is CollagesLoadingState)
+                  const LinearProgressIndicator(),
+                if (_collageData['cover_page'] != null)
+                  Image.network(
+                    _collageData['cover_page'],
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        formatValue(_collageData['name']),
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.black,
+                            ),
                       ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            formatValue(_collageData['name']),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.black,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            formatAddress(_collageData),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
+                      const SizedBox(height: 4),
+                      Text(
+                        formatAddress(_collageData),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey[700],
                                 ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            formatValue(_collageData['description']),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        formatValue(_collageData['description']),
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.grey[700],
                                 ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "Courses",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.black,
-                                ),
-                          ),
-                          if (_course.isNotEmpty)
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (_course.isNotEmpty)
-                            Wrap(
-                              runSpacing: 20,
-                              spacing: 20,
-                              children: List.generate(
-                                _course.length,
-                                (index) => CustomChip(
-                                  name: formatValue(_course[index]?['courses']
-                                      ?['courses']?['course_name']),
-                                  onTap: () {},
-                                ),
-                              ),
-                            ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Courses",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.black,
+                            ),
+                      ),
+                      if (_course.isNotEmpty)
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      if (_course.isNotEmpty)
+                        Wrap(
+                          runSpacing: 20,
+                          spacing: 20,
+                          children: List.generate(
+                            _course.length,
+                            (index) => CustomCourseCard(
+                              name: formatValue(_course[index]?['courses']
+                                  ?['courses']?['course_name']),
+                              image: formatValue(_course[index]?['courses']
+                                  ?['courses']?['photo_url']),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CourseDetailsScreen(
+                                      feeRange: _course[index],
+                                      syllabus: _course[index]?['syllabus'],
+                                      courseDetails: _course[index]?['courses'],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             );
           },
         ),

@@ -1,6 +1,6 @@
 import 'package:carrier_seeker_app/common_widgets.dart/custom_button.dart';
 import 'package:carrier_seeker_app/common_widgets.dart/custom_text_formfield.dart';
-import 'package:carrier_seeker_app/features/home_screen.dart';
+import 'package:carrier_seeker_app/features/interest/add_intersts.dart';
 import 'package:carrier_seeker_app/features/login/login_screen.dart';
 import 'package:carrier_seeker_app/features/sign_up/sign_up_bloc/sign_up_bloc.dart';
 import 'package:carrier_seeker_app/util/value_validator.dart';
@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
               } else if (state is SignUpSuccessState) {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => const AddInterests()),
                   (route) => false,
                 );
               }
@@ -143,7 +143,11 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextFormField(
                         controller: _confirmPasswordController,
-                        //TODO: validation
+                        validator: (value) {
+                          confirmPasswordValidator(
+                              value, _passwordController.text);
+                          return null;
+                        },
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -234,7 +238,7 @@ class _SignUpState extends State<SignUp> {
                                       builder: (context) =>
                                           const LoginScreen()));
                             },
-                            child: Text('Sign Up'),
+                            child: const Text('Sign Up'),
                           ),
                         ],
                       ),

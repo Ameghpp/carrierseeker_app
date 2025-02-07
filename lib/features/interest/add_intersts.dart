@@ -1,21 +1,23 @@
 import 'package:carrier_seeker_app/common_widgets.dart/custom_button.dart';
+import 'package:carrier_seeker_app/features/home_screen.dart';
 import 'package:carrier_seeker_app/features/interest/interests_chip.dart';
 import 'package:carrier_seeker_app/util/format_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../common_widgets.dart/custom_alert_dialog.dart';
 import '../../util/check_login.dart';
 import 'interests_bloc/interests_bloc.dart';
 
-class Interests extends StatefulWidget {
-  const Interests({super.key});
+class AddInterests extends StatefulWidget {
+  const AddInterests({super.key});
 
   @override
-  State<Interests> createState() => _InterestsState();
+  State<AddInterests> createState() => _AddInterestsState();
 }
 
-class _InterestsState extends State<Interests> {
+class _AddInterestsState extends State<AddInterests> {
   final InterestsBloc _interestsBloc = InterestsBloc();
 
   Map<String, dynamic> params = {
@@ -32,7 +34,7 @@ class _InterestsState extends State<Interests> {
   }
 
   void getInterests() {
-    _interestsBloc.add(GetAllUserInterestsEvent(params: params));
+    _interestsBloc.add(GetAllInterestsEvent(params: params));
   }
 
   @override
@@ -56,13 +58,6 @@ class _InterestsState extends State<Interests> {
             );
           } else if (state is InterestsGetSuccessState) {
             _interests = state.interests;
-            _selectedInterestIds = _interests
-                .where((interest) => interest['is_selected'] == true)
-                .map((interest) => {
-                      'user_id': interest['user_id'],
-                      'interest_id': interest['interest_id']
-                    })
-                .toList();
             Logger().w(_interests);
             setState(() {});
           } else if (state is InterestsSuccessState) {
@@ -98,20 +93,19 @@ class _InterestsState extends State<Interests> {
                     children: List.generate(
                       _interests.length,
                       (index) => InterestsChip(
-                        isActive: _interests[index]['is_selected'],
-                        name: formatValue(_interests[index]['interest_name']),
+                        isActive: false,
+                        name: formatValue(_interests[index]['name']),
                         onTap: (isActive) {
                           if (isActive) {
+                            String userID =
+                                Supabase.instance.client.auth.currentUser!.id;
                             _selectedInterestIds.add({
-                              'user_id': _interests[index]['user_id'],
-                              'interest_id': _interests[index]['interest_id']
+                              'user_id': userID,
+                              'interest_id': _interests[index]['id']
                             });
                           } else {
                             _selectedInterestIds.removeWhere((item) =>
-                                item['user_id'] ==
-                                    _interests[index]['user_id'] &&
-                                item['interest_id'] ==
-                                    _interests[index]['interest_id']);
+                                item['interest_id'] == _interests[index]['id']);
                           }
                         },
                       ),
@@ -124,9 +118,12 @@ class _InterestsState extends State<Interests> {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 onPressed: () {
-                  _interestsBloc.add(EditInterestsEvent(
-                      interestDetails: _selectedInterestIds));
-                  Navigator.pop(context);
+                  _interestsBloc.add(
+                      AddInterestsEvent(interestDetails: _selectedInterestIds));
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      (route) => false);
                 },
                 label: 'Save',
               ),

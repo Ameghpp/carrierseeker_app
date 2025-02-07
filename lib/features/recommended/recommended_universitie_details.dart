@@ -196,7 +196,6 @@ class _RecommendedUniversitieDetailsState
                                       (index) => CustomChip(
                                         name: formatValue(_course[index]
                                             ?['courses']?['course_name']),
-                                        onTap: () {},
                                       ),
                                     ),
                                   ),
