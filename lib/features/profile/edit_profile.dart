@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:carrier_seeker_app/common_widgets.dart/custom_image_picker_button.dart';
 import 'package:carrier_seeker_app/common_widgets.dart/custom_text_formfield.dart';
 import 'package:carrier_seeker_app/features/profile/profile_bloc/profile_bloc.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:carrier_seeker_app/util/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -26,12 +28,15 @@ class _EditProfileState extends State<EditProfile> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final ProfileBloc _profileBloc = ProfileBloc();
-  PlatformFile? file;
+  File? file;
   List _streams = [];
   int? _selectedStream;
 
   @override
   void initState() {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      requestStoragePermission();
+    });
     getStreams();
     _nameController.text = widget.profileDetails['name'];
     _percentageController.text = widget.profileDetails['overall_percentage'];
@@ -154,8 +159,8 @@ class _EditProfileState extends State<EditProfile> {
                         };
 
                         if (file != null) {
-                          details['photo_file'] = file!.bytes;
-                          details['photo_name'] = file!.name;
+                          details['photo_file'] = file!;
+                          details['photo_name'] = file!.path;
                         }
                         BlocProvider.of<ProfileBloc>(context).add(
                           EditProfileEvent(
