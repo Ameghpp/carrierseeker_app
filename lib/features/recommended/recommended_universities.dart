@@ -1,5 +1,6 @@
 import 'package:carrier_seeker_app/features/recommended/recommended_universitie_details.dart';
 import 'package:carrier_seeker_app/features/university/custom_university_card.dart';
+import 'package:carrier_seeker_app/theme/app_theme.dart';
 import 'package:carrier_seeker_app/util/format_function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,14 +69,15 @@ class _RecommendedUniversitieState extends State<RecommendedUniversitie> {
         },
         builder: (context, state) {
           return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.only(bottom: 120, left: 20, right: 20),
             shrinkWrap: true,
             children: [
               Text(
-                "Colleges",
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Colors.black,
-                    ),
+                "Recommended Universities",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: onSurfaceColor, fontSize: 18),
               ),
               const SizedBox(
                 height: 10,

@@ -68,11 +68,11 @@ class _UniversitiesState extends State<Universities> {
         },
         builder: (context, state) {
           return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.only(bottom: 120, left: 20, right: 20),
             shrinkWrap: true,
             children: [
               Text(
-                "Colleges",
+                "Universities",
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Colors.black,
                     ),

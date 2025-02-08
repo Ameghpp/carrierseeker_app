@@ -170,7 +170,7 @@ class _EditProfileState extends State<EditProfile> {
                         );
                       }
                     },
-                    label: 'Sign Up',
+                    label: 'Save',
                   ),
                 ],
               ),
