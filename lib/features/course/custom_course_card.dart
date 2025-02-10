@@ -21,6 +21,7 @@ class CustomCourseCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       elevation: 4,
+      shadowColor: Colors.black,
       child: InkWell(
         onTap: onTap,
         child: Column(

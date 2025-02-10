@@ -50,17 +50,11 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (photoUrl != null)
-                    ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8),
-                        topRight: Radius.circular(8),
-                      ),
-                      child: Image.network(
-                        photoUrl!,
-                        height: 250,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+                    Image.network(
+                      photoUrl!,
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
