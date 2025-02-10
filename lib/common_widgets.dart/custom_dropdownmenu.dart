@@ -6,13 +6,13 @@ class CustomDropDownMenu<T> extends StatelessWidget {
   final T? initialSelection;
   final Function(T? selected) onSelected;
   final String hintText;
-  final double width;
+  final double? width;
   final List<DropdownMenuEntry<T>> dropdownMenuEntries;
   const CustomDropDownMenu({
     super.key,
     required this.hintText,
     required this.dropdownMenuEntries,
-    this.width = 360,
+    this.width,
     required this.onSelected,
     this.controller,
     this.initialSelection,
@@ -26,7 +26,7 @@ class CustomDropDownMenu<T> extends StatelessWidget {
       initialSelection: initialSelection,
       onSelected: onSelected,
       controller: controller,
-      width: width,
+      width: width ?? double.infinity,
       hintText: hintText,
       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.w500,
