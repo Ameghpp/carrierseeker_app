@@ -248,11 +248,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   showDialog(
                     context: context,
                     builder: (context) => CustomAlertDialog(
-                      title: "LOG OUT",
+                      title: "SIGN OUT",
                       content: const Text(
-                        "Are you sure you want to log out? Clicking 'Logout' will end your current session and require you to sign in again to access your account.",
+                        "Are you sure you want to Sign Out? Clicking 'Sign Out' will end your current session and require you to sign in again to access your account.",
                       ),
-                      primaryButton: "LOG OUT",
+                      primaryButton: "SIGN OUT",
                       onPrimaryPressed: () {
                         Supabase.instance.client.auth.signOut();
                         Navigator.pushAndRemoveUntil(
@@ -265,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   );
                 },
-                label: 'Log Out',
+                label: 'Sign Out',
                 iconData: Icons.logout,
               ),
             ],
