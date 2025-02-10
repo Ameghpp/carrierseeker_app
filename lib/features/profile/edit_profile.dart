@@ -111,6 +111,7 @@ class _EditProfileState extends State<EditProfile> {
                     height: 15,
                   ),
                   CustomTextFormField(
+                    isLoading: state is ProfileLoadingState,
                     labelText: 'Name',
                     controller: _nameController,
                     validator: alphabeticWithSpaceValidator,
@@ -119,6 +120,7 @@ class _EditProfileState extends State<EditProfile> {
                     height: 15,
                   ),
                   CustomTextFormField(
+                    isLoading: state is ProfileLoadingState,
                     labelText: "Overall Percentage +1,+2",
                     controller: _percentageController,
                     validator: percentageValidator,
@@ -127,6 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                     height: 15,
                   ),
                   CustomDropDownMenu(
+                    isLoading: state is ProfileLoadingState,
                     initialSelection: _selectedStream,
                     controller: _streamController,
                     hintText: "Select Streams",

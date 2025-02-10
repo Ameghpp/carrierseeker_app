@@ -102,6 +102,7 @@ class _SignUpState extends State<SignUp> {
                         height: 15,
                       ),
                       CustomTextFormField(
+                        isLoading: state is SignUpLoadingState,
                         labelText: 'Name',
                         controller: _nameController,
                         validator: alphabeticWithSpaceValidator,
@@ -110,6 +111,7 @@ class _SignUpState extends State<SignUp> {
                         height: 15,
                       ),
                       CustomTextFormField(
+                        isLoading: state is SignUpLoadingState,
                         labelText: 'Email',
                         controller: _emailController,
                         validator: emailValidator,
@@ -170,6 +172,7 @@ class _SignUpState extends State<SignUp> {
                         height: 15,
                       ),
                       CustomTextFormField(
+                        isLoading: state is SignUpLoadingState,
                         labelText: "Overall Percentage +1,+2",
                         controller: _percentageController,
                         validator: percentageValidator,
@@ -178,6 +181,7 @@ class _SignUpState extends State<SignUp> {
                         height: 15,
                       ),
                       CustomDropDownMenu(
+                        isLoading: state is SignUpLoadingState,
                         initialSelection: _selectedStream,
                         controller: _streamController,
                         hintText: "Select Streams",

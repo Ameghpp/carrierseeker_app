@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../common_widgets.dart/custom_alert_dialog.dart';
+import '../../common_widgets.dart/forgot_password.dart';
+import '../../common_widgets.dart/text_link.dart';
 import 'signin_bloc/signin_bloc.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -91,6 +93,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         height: 30,
                       ),
                       CustomTextFormField(
+                        isLoading: state is SigninLoadingState,
                         controller: _emailController,
                         validator: emailValidator,
                         labelText: 'email',
@@ -119,6 +122,21 @@ class _SigninScreenState extends State<SigninScreen> {
                                   : Icons.visibility_off,
                             ),
                           ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextLink(
+                          text: 'Forgot Password?',
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => const ForgotPasswordDialog(),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -161,7 +179,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const SignUp()));
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),
