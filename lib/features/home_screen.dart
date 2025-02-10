@@ -197,7 +197,7 @@ class CustomNavBarItem extends StatelessWidget {
                 size: 30,
               ),
               if (isActive)
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 2,
                   backgroundColor: Colors.white,
                 )

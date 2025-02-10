@@ -65,7 +65,7 @@ class _CollagesState extends State<Collages> {
         builder: (context, state) {
           return ListView(
             shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.only(bottom: 120, left: 20, right: 20),
             children: [
               Text(
                 "Colleges",
