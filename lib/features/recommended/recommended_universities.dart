@@ -91,34 +91,42 @@ class _RecommendedUniversitieState extends State<RecommendedUniversitie> {
               const SizedBox(
                 height: 20,
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _universities.length,
-                itemBuilder: (context, index) =>
-                    _universities[index]['cover_image'] != null
-                        ? CustomUniversityCard(
-                            coverImageUrl: _universities[index]['cover_image'],
-                            logoUrl: _universities[index]['logo'],
-                            address: formatAddress(_universities[index]),
-                            name: formatValue(_universities[index]['name']),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecommendedUniversitieDetails(
-                                    universitieId: _universities[index]['id'],
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                        : SizedBox(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 15,
+              if (state is UniversitiesLoadingState) LinearProgressIndicator(),
+              if (state is UniversitiesGetSuccessState && _universities.isEmpty)
+                Center(
+                  child: Text("No Recommendation found!"),
                 ),
-              ),
+              if (state is UniversitiesGetSuccessState &&
+                  _universities.isNotEmpty)
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _universities.length,
+                  itemBuilder: (context, index) =>
+                      _universities[index]['cover_image'] != null
+                          ? CustomUniversityCard(
+                              coverImageUrl: _universities[index]
+                                  ['cover_image'],
+                              logoUrl: _universities[index]['logo'],
+                              address: formatAddress(_universities[index]),
+                              name: formatValue(_universities[index]['name']),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        RecommendedUniversitieDetails(
+                                      universitieId: _universities[index]['id'],
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          : SizedBox(),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 15,
+                  ),
+                ),
             ],
           );
         },
